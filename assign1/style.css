@@ -1,0 +1,53 @@
+/* Classes */
+
+.container {
+	width: 500px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.display-block {
+	display: block;
+}
+
+.display-inline {
+	display: inline;
+}
+
+.display-inline-block {
+	display: inline-block;
+}
+
+.input-wide {
+	width: 250px;
+}
+
+.pull-right {
+	text-align: right;
+	float: right;
+}
+
+.share {
+	display: inline-block;
+	width: 100px;
+}
+
+/* /Classes */
+
+/* Elements */
+
+a {
+	color: rgb(0, 129, 169);
+	text-decoration: none;
+}
+
+a:hover {
+	color: rgb(0, 100, 255);
+}
+
+body {
+	font-family: "Arial";
+
+}
+
+/* /Elements */
