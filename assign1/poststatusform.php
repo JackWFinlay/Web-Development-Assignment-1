@@ -38,14 +38,30 @@
 					</p>
 				</div>
 				<!-- /Share -->
+
+				<p><span class="share">Date: </span><input type="text" name="date" class=share></p>
+
+				<!-- Permissions -->
+				<div>
+					<p class="share">Permission Type:</p> 
+					<p class="share">
+						<input type="checkbox" name="share" value="AllowLike">Allow Like
+					</p>
+					<p class="share">
+						<input type="checkbox" name="share" value="AllowComment">Allow Comment
+					</p>
+					<p class="share">
+						<input type="checkbox" name="share" value="AllowShare">Allow Share
+					</p>
+				</div>
+				<!-- /Permissions -->
+
 				<div>
 					<input type="submit" value="Post" class="display-inline">
 					<input type="reset" value="Reset" class="display-inline">
 				</div>
-
-				<br/>
 			</form>
-			<a href="index.php">Return to Home Page</a>
+			<p><a href="index.php">Return to Home Page</a></p>
 		</div>
 
 	</body>

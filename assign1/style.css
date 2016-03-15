@@ -1,7 +1,7 @@
 /* Classes */
 
 .container {
-	width: 500px;
+	width: 550px;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -19,7 +19,7 @@
 }
 
 .input-wide {
-	width: 250px;
+	width: 400px;
 }
 
 .pull-right {
@@ -29,7 +29,7 @@
 
 .share {
 	display: inline-block;
-	width: 100px;
+	width: 130px;
 }
 
 /* /Classes */
