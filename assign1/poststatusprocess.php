@@ -18,18 +18,18 @@
 	<body>
 		<div class="container">
 			<?php
-				$statusCodePattern = "/^S\d{4}$/";
-				$statusPattern = "/^[a-zA-Z0-9\s!,\?\.]*$/";
-				$datePattern = "/\d{1,2}\/\d{1,2}\/\d{4}/";
+				// Regular Expressions
+				$statusCodePattern = '/^S\d{4}$/';
+				$statusPattern = '/^[a-zA-Z0-9\s!,\?\.]*$/';
+				$datePattern = '/\d{1,2}\/\d{1,2}\/\d{4}/';
 
 				$statusCode = $_POST["statusCode"];
 				$status = $_POST["status"];
 				$date = $_POST["date"];
 
-
-
+				// Check that code, status, and date match patterns
 				if ((preg_match($statusCodePattern, $statusCode)) &&
-					(preg_match($statusCodePattern, $status)) &&
+					(preg_match($statusPattern, $status)) &&
 				 	(preg_match($datePattern, $date))) {
 
 				 	echo "<p> $statusCode, $status, $date <p>";
