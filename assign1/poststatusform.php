@@ -20,9 +20,9 @@
 			<h1>Status Posting System</h1>
 			<form action="poststatusprocess.php" method="post" id="postStatusForm">
 
-				<p>Status Code (required) <input type="text" name="statusCode"></p>
+				<p>Status Code (required): <input type="text" name="statusCode"></p>
 
-				<p>Status (required) <input type="text" name="status" class="input-wide"></p>
+				<p>Status (required): <input type="text" name="status" class="input-wide"></p>
 				
 				<!-- Share -->
 				<div>
@@ -34,24 +34,28 @@
 						<input type="radio" name="share" value="Friends">Friends
 					</p>
 					<p class="share">
-						<input type="radio" name="share" value="Only Me">Only Me
+						<input type="radio" name="share" value="OnlyMe">Only Me
 					</p>
 				</div>
 				<!-- /Share -->
+				<?php
 
-				<p><span class="share">Date: </span><input type="text" name="date" class=share></p>
+				$date = date('d/m/Y');
+
+				echo "<p><span class='share'>Date: </span><input type='text' name='date' class='share' value='$date'></p>"
+				?>
 
 				<!-- Permissions -->
 				<div>
 					<p class="share">Permission Type:</p> 
 					<p class="share">
-						<input type="checkbox" name="share" value="AllowLike">Allow Like
+						<input type="checkbox" name="allowLike" value="true">Allow Like
 					</p>
 					<p class="share">
-						<input type="checkbox" name="share" value="AllowComment">Allow Comment
+						<input type="checkbox" name="allowComment" value="true">Allow Comment
 					</p>
 					<p class="share">
-						<input type="checkbox" name="share" value="AllowShare">Allow Share
+						<input type="checkbox" name="allowShare" value="true">Allow Share
 					</p>
 				</div>
 				<!-- /Permissions -->
@@ -61,7 +65,8 @@
 					<input type="reset" value="Reset" class="display-inline">
 				</div>
 			</form>
-			<p><a href="index.php">Return to Home Page</a></p>
+			<br/>
+			<a href="index.php">Return to Home Page</a>
 		</div>
 
 	</body>
