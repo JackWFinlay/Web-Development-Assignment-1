@@ -20,44 +20,46 @@
 			<h1>Status Posting System</h1>
 			<form action="poststatusprocess.php" method="post" id="postStatusForm">
 
-				<p>Status Code (required): <input type="text" name="statusCode"></p>
+				<label class="display-inline-block">Status Code (required): <input type="text" name="statusCode"></label><br/>
 
-				<p>Status (required): <input type="text" name="status" class="input-wide"></p>
-				
-				<!-- Share -->
-				<div>
-					<p class="share">Share:</p> 
-					<p class="share">
-						<input type="radio" name="share" value="Public">Public
-					</p>
-					<p class="share">
-						<input type="radio" name="share" value="Friends">Friends
-					</p>
-					<p class="share">
-						<input type="radio" name="share" value="OnlyMe">Only Me
-					</p>
-				</div>
-				<!-- /Share -->
+				<label class="display-inline-block">Status (required): <input type="text" name="status" class="input-wide"></label><br/>
+
 				<?php
 
 				$date = date('d/m/Y');
 
-				echo "<p><span class='share'>Date: </span><input type='text' name='date' class='share' value='$date'></p>"
+				echo "<label><span class='share display-inline-block'>Date: </span><input type='text' name='date' class='share' value='$date'></label><br/>"
 				?>
+				
+				<!-- Share -->
+				
+				<label class="share">Share:</label> 
+				<label class="share">
+					<input type="radio" name="share" value="Public">Public
+				</label>
+				<label class="share">
+					<input type="radio" name="share" value="Friends">Friends
+				</label>
+				<label class="share">
+					<input type="radio" name="share" value="OnlyMe">Only Me
+				</label>
+				
+				<!-- /Share -->
+				
 
 				<!-- Permissions -->
-				<div>
-					<p class="share">Permission Type:</p> 
-					<p class="share">
-						<input type="checkbox" name="allowLike" value="true">Allow Like
-					</p>
-					<p class="share">
-						<input type="checkbox" name="allowComment" value="true">Allow Comment
-					</p>
-					<p class="share">
-						<input type="checkbox" name="allowShare" value="true">Allow Share
-					</p>
-				</div>
+				
+				<label class="share">Permission Type:</label> 
+				<label class="share">
+					<input type="checkbox" name="allowLike" value="true">Allow Like
+				</label>
+				<label class="share">
+					<input type="checkbox" name="allowComment" value="true">Allow Comment
+				</label>
+				<label class="share">
+					<input type="checkbox" name="allowShare" value="true">Allow Share
+				</label>
+				
 				<!-- /Permissions -->
 
 				<div>
