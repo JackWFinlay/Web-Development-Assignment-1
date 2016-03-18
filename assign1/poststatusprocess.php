@@ -19,53 +19,51 @@
 		<div class="container">
 			<h1>Status Posting System</h1>
 			<?php
-				function processStatus() {
-					// Regular Expressions
-					$statusCodePattern = '/^S\d{4}$/';
-					$statusPattern     = '/^[a-zA-Z0-9\s!,\?\.]*$/';
-					$datePattern       = '/^\d{1,2}\/\d{1,2}\/\d{4}$/';
+				require 'helperfunctions.php';
+				run();
 
-					if (empty($_POST["statusCode"])){ // Print message if statusCode is not specified.
-						echo "<p>Status Code not specified</p>";
+				function run(){
+					$servername = "localhost";
+					$username 	= "root";
+					$password 	= "";
+
+					if (!isDataValid()){
+						return;
 					}
+					
+					$connection = new mysqli($servername, $username, $password); // Create new DB connection.
 
-					if (empty($_POST["status"])){
-						echo "<p>Status not specified</p>";
-					}
-
-					if (empty($_POST["date"])){
-						echo "<p>Date not specified</p>";
-					}
-
-					if (empty($_POST["statusCode"]) ||
-						empty($_POST["status"]) ||
-						empty($_POST["date"])){ // Display link back to poststatus form if any value is empty.
-
-						echo "<a href='poststatusform.php' class='display-block'>Try again</a><br/>";
-						return; // Stop processing php section.
+					if ($connection->connect_error) {
+					    echo "<p>Unable to connect to database: " . $connection->connect_error . "</p>";
+					    return;
 					} 
 
-
-					$statusCode   = $_POST["statusCode"]; 
-					$status       = $_POST["status"];
-					$date         = $_POST["date"];
-					$share        = isset($_POST["share"]) ? $_POST["share"] : "Public"; //Default to public if not set
-					$allowLike	  = isset($_POST["allowLike"]) ? $_POST["allowLike"] : FALSE; //FALSE if not set;
-					$allowComment = isset($_POST["allowComment"]) ? $_POST["allowComment"] : FALSE;
-					$allowShare   = isset($_POST["allowShare"]) ? $_POST["allowShare"] : FALSE;
-
-					// Check that code, status, and date match patterns
-					if ((preg_match($statusCodePattern, $statusCode)) &&
-						(preg_match($statusPattern, $status)) &&
-					 	(preg_match($datePattern, $date))) {
-
-					 	echo "<p>$statusCode, $status, $date<p>";
-					} else {
-						echo "<p>Failure.</p>";
+					if (!isStatusCodeUnique($connection)) {
+						$statusCode = $_POST["statusCode"];
+						echo "<p> The statusCode $statusCode is not unique.</p>";
+						return;
 					}
-				}
 
-				processStatus();
+					if (!checkDBExists($connection)) {
+						return;
+					}
+
+					$connection->select_db("fhp0351_Ass1_DB");
+
+					if (!checkTableExists($connection)) {
+						return;
+					}
+
+					if (!insertStatus($connection)) {
+						echo "<p>Unable to post status.";
+						echo "<a href='poststatusform.php' class='display-block'>Return to post status form</a><br/>";
+						return;
+					}
+
+					echo
+
+					$connection->close();
+				}
 			?>
 			
 			<a href="index.php">Return to Home Page</a>
