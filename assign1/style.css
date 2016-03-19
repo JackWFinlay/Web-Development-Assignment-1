@@ -5,7 +5,6 @@
 	margin-right: auto;
 	margin-left: auto;
 	padding: 10px;
-
 }
 
 .display-block {
@@ -29,6 +28,14 @@
 	float: right;
 }
 
+.search-result {
+	padding: 1px 10px 1px 10px;
+	margin-top: 10px;
+
+	border-left: 5px solid rgb(0, 129, 169);
+	background: #fcfcfc;
+}
+
 .share {
 	display: inline-block;
 	width: 130px;
@@ -49,8 +56,8 @@ a:hover {
 
 body {
 	font-family: "Arial";
-
 }
+
 
 label {
 	margin-top: 5px;

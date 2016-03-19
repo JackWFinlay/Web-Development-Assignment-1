@@ -20,17 +20,48 @@
 			<h1>Status Posting System</h1>
 			<div>
 			<?php
-				$searchString = $_GET["searchString"];
-				$servername   = "localhost";
-				$username     = "username";
-				$password     = "password";
-				$dbname       = "dbname";
+				require 'helperfunctions.php';
+				run();
 
+				function run(){
+					$servername = "localhost";
+					$username 	= "root";
+					$password 	= "";
+					$dbname		= "fhp0351_Ass1_DB";
 
+					if (empty($_GET['searchString'])) {
+						echo "<p>Search string is empty. Please enter a value.";
+						return;
+					}
 
-				
+					$connection = new mysqli($servername, $username, $password); // Create new DB connection.
+
+					if ($connection->connect_error) {
+					    echo "<p>Unable to connect to database: " . $connection->connect_error . "</p>";
+					    return;
+					} 
+
+					if (!checkDBExists($connection)) {
+						echo "<p>Unable to find or create database, please try again.</p>";
+						return;
+					}
+
+					$connection->select_db($dbname);
+
+					if (!checkTableExists($connection)) {
+						echo "<p>Unable to create or find database table, please try again.</p>";
+						return;
+					}
+
+					if (!getSearchResults($connection)){
+						echo "<p>Unable to find status try again.</p>";
+					}
+
+					$connection->close();
+				}
 			?>
 			</div>
+			<br/>
 			<a href="searchstatusform.php">Search for another status</a>
 			<a href="index.php" class="pull-right">Return to Home Page</a>
 		</div>

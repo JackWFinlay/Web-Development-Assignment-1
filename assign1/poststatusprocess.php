@@ -3,6 +3,8 @@
 	<head>
 
 		<!-- Stylesheets -->
+		
+
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<!-- /Stylesheets -->
 
@@ -20,12 +22,13 @@
 			<h1>Status Posting System</h1>
 			<?php
 				require 'helperfunctions.php';
-				run();
+				run(); //Declared and run as function so that return can be called, halting processing of PHP, but allowing parsing of HTML to continue.
 
 				function run(){
 					$servername = "localhost";
 					$username 	= "root";
 					$password 	= "";
+					$dbname		= "fhp0351_Ass1_DB";
 
 					if (!isDataValid()){
 						return;
@@ -38,34 +41,36 @@
 					    return;
 					} 
 
-					if (!isStatusCodeUnique($connection)) {
-						$statusCode = $_POST["statusCode"];
-						echo "<p> The statusCode $statusCode is not unique.</p>";
-						return;
-					}
-
 					if (!checkDBExists($connection)) {
+						echo "<p>Unable to find or create database, please try again: " . $connection->error . "</p>";
 						return;
 					}
 
-					$connection->select_db("fhp0351_Ass1_DB");
+					$connection->select_db($dbname);
 
 					if (!checkTableExists($connection)) {
+						echo "<p>Unable to create or find database table, please try again:" . $connection->error . "</p>";
+						return;
+					}
+
+					if (!isStatusCodeUnique($connection)) {
+						$statusCode = $_POST["statusCode"];
+						echo "<p>The statusCode $statusCode is not unique.</p>";
 						return;
 					}
 
 					if (!insertStatus($connection)) {
-						echo "<p>Unable to post status.";
-						echo "<a href='poststatusform.php' class='display-block'>Return to post status form</a><br/>";
+						echo "<p>Unable to post status try again: " . $connection->error . "</p>";
 						return;
 					}
 
-					echo
-
 					$connection->close();
+
+					echo "<p>Status was successfully posted!</p>";
 				}
 			?>
 			
+			<a href='poststatusform.php' class='display-block'>Return to Post Status form</a><br/>
 			<a href="index.php">Return to Home Page</a>
 		</div>
 	</body>

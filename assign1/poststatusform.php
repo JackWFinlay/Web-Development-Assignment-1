@@ -20,9 +20,9 @@
 			<h1>Status Posting System</h1>
 			<form action="poststatusprocess.php" method="post" id="postStatusForm">
 
-				<label class="display-inline-block">Status Code (required): <input type="text" name="statusCode"></label><br/>
+				<label class="display-inline-block">Status Code (required): <input type="text" name="statusCode" required></label><br/>
 
-				<label class="display-inline-block">Status (required): <input type="text" name="status" class="input-wide"></label><br/>
+				<label class="display-inline-block">Status (required): <input type="text" name="status" class="input-wide" required></label><br/>
 
 				<?php
 
