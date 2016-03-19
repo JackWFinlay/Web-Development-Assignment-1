@@ -1,5 +1,14 @@
 /* Classes */
 
+.align-form-buttons {
+	margin-right: 42px;
+}
+
+.align-home-link {
+	display: inline-block;
+	padding-top: 5px; 
+}
+
 .container {
 	width: 550px;
 	margin-right: auto;
@@ -19,13 +28,29 @@
 	display: inline-block;
 }
 
+.form-group {
+	line-height: 24px;
+	margin-bottom: 5px;
+}
+
+.form-label {
+	display: inline-block;
+	width: 135px;
+	text-align: right;
+	padding-right: 10px;
+}
+
 .input-wide {
-	width: 400px;
+	width: 350px;
 }
 
 .pull-right {
 	text-align: right;
 	float: right;
+}
+
+.search-label {
+	padding-right: 10px;
 }
 
 .search-result {
@@ -38,7 +63,7 @@
 
 .share {
 	display: inline-block;
-	width: 130px;
+	width: 100px;
 }
 
 /* /Classes */
@@ -55,13 +80,36 @@ a:hover {
 }
 
 body {
-	font-family: "Arial";
+	font-family: "Helvetica neue",Helvetica,Arial,sans-serif;
 }
 
+input[type="text"] {	
+	height: 20px;
+	border: 1px #ccc solid;
+	font-size: 14px;
+	padding-left: 10px;
+	border-radius: 4px;
+}
+
+input[type="submit"],
+input[type="reset"] {
+	-webkit-appearance: none;
+	height: 24px;
+	border: 1px #ccc solid;
+	font-size: 14px;
+	border-radius: 4px;
+	background: white;
+
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+	background: #ccc;
+}
 
 label {
-	margin-top: 5px;
-	margin-bottom: 5px;
+	font-weight: bold;
+	font-size: 12px;
 }
 
 /* /Elements */

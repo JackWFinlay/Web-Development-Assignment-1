@@ -52,12 +52,13 @@
 						echo "<p>Unable to create or find database table, please try again:" . $connection->error . "</p>";
 						return;
 					}
-
+					
 					if (!isStatusCodeUnique($connection)) {
 						$statusCode = $_POST["statusCode"];
 						echo "<p>The statusCode $statusCode is not unique.</p>";
 						return;
 					}
+					
 
 					if (!insertStatus($connection)) {
 						echo "<p>Unable to post status try again: " . $connection->error . "</p>";

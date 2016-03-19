@@ -20,55 +20,73 @@
 			<h1>Status Posting System</h1>
 			<form action="poststatusprocess.php" method="post" id="postStatusForm">
 
-				<label class="display-inline-block">Status Code (required): <input type="text" name="statusCode" required></label><br/>
+				<div class="form-group">
+					<label class="form-label">Status Code (required):</label>
+					<input type="text" name="statusCode" required><br/>
+				</div>
 
-				<label class="display-inline-block">Status (required): <input type="text" name="status" class="input-wide" required></label><br/>
+				<div class="form-group">
+					<label class="form-label">Status (required):</label> 
+					<input type="text" name="status" class="input-wide" required><br/>
+				</div>
 
 				<?php
 
 				$date = date('d/m/Y');
 
-				echo "<label><span class='share display-inline-block'>Date: </span><input type='text' name='date' class='share' value='$date'></label><br/>"
+				echo "<label class='form-label'>Date: </label>
+					  <input type='text' name='date' class='share' value='$date'><br/>"
 				?>
 				
 				<!-- Share -->
 				
-				<label class="share">Share:</label> 
-				<label class="share">
-					<input type="radio" name="share" value="Public">Public
-				</label>
-				<label class="share">
-					<input type="radio" name="share" value="Friends">Friends
-				</label>
-				<label class="share">
-					<input type="radio" name="share" value="OnlyMe">Only Me
-				</label>
-				
+				<div class="form-group">
+					<label class="form-label">Share:</label> 
+
+					<input type="radio" name="share" value="Public" id="public">
+					<label for="public" class="share">Public</label>
+
+					
+					<input type="radio" name="share" value="Friends" id="friends">
+					<label class="share" for="friends">Friends</label>
+
+					
+					<input type="radio" name="share" value="Only Me" id="onlyme">
+					<label class="share" for="onlyme">Only Me</label>
+				</div>
 				<!-- /Share -->
 				
 
 				<!-- Permissions -->
 				
-				<label class="share">Permission Type:</label> 
-				<label class="share">
-					<input type="checkbox" name="allowLike" value="true">Allow Like
-				</label>
-				<label class="share">
-					<input type="checkbox" name="allowComment" value="true">Allow Comment
-				</label>
-				<label class="share">
-					<input type="checkbox" name="allowShare" value="true">Allow Share
-				</label>
-				
+				<div class="form-group">
+					<label class="form-label">Permission Type:</label> 
+					
+					<input type="checkbox" name="allowLike" value="true" id="allowLike">
+					<label class="share" for="allowLike">Allow Like</label>
+
+					
+					<input type="checkbox" name="allowComment" value="true" id="allowComment">
+					<label class="share" for="allowComment">Allow Comment</label>
+
+					
+					<input type="checkbox" name="allowShare" value="true" id="allowShare">
+					<label class="share" for="allowShare">Allow Share</label>
+				</div>
 				<!-- /Permissions -->
 
-				<div>
+				<div class="align-home-link">
+					<a href="index.php">Return to Home Page</a>
+				</div>
+
+				<div class="pull-right align-form-buttons">
 					<input type="submit" value="Post" class="display-inline">
 					<input type="reset" value="Reset" class="display-inline">
 				</div>
+				</div>
 			</form>
-			<br/>
-			<a href="index.php">Return to Home Page</a>
+
+			
 		</div>
 
 	</body>

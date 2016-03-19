@@ -21,9 +21,10 @@
 			<form action="searchstatusprocess.php" method="get" id="getStatusForm">
 
 				<div>
-					<p class="display-inline">Status: <input type="text" name="searchString"></p>
+					<label for="searchbox" class="search-label">Status: </label>
+					<input type="text" class="input-wide" name="searchString" id="searchbox" required>
 
-					<input type="submit" value="View Status" class="display-inline">
+					<input type="submit" value="View Status">
 				</div>
 			</form>
 			<br/>
