@@ -54,7 +54,7 @@
 					}
 
 					if (!getSearchResults($connection)){
-						echo "<p>Unable to find status try again.</p>";
+						echo "<p>Unable to find status, please try again or use another serach phrase.</p>";
 					}
 
 					$connection->close();

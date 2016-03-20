@@ -16,7 +16,7 @@
 		$createTableSQL = "CREATE TABLE status (
 							statusCode VARCHAR(5) NOT NULL PRIMARY KEY,
 							status VARCHAR(1024) NOT NULL,
-							statusDate VARCHAR(10) NOT NULL,
+							statusDate DATE NOT NULL,
 							share VARCHAR(7),
 							allowLike BOOLEAN,
 							allowComment BOOLEAN,
@@ -43,7 +43,10 @@
 	function insertStatus($connection){
 		$statusCode     = $_POST["statusCode"]; 
 		$status         = $_POST["status"];
-		$date 			= $_POST["date"];
+		
+		$date = str_replace('/', '-', $_POST["date"]); // PHP needs date with hyphens for dd/mm/yyyy formats.
+		$date = date('Y-m-d', strtotime($date)); // yyyy-mm-dd required for MySql Databases.
+
 		$share          = isset($_POST["share"]) ? $_POST["share"] : "Public"; //Default to public if not set.
 		$allowLike	    = isset($_POST["allowLike"]) ? $_POST["allowLike"] : false; //false if not set.
 		$allowComment   = isset($_POST["allowComment"]) ? $_POST["allowComment"] : false;
@@ -114,8 +117,13 @@
 			return false;
 		} 
 
-		if (!preg_match($datePattern, $_POST["date"])){
-			echo "<p>Date is in incorrect format. Must be DD/MM/YYYY</p>";
+		$day 	= substr($_POST["date"], 0,2); //Grab the relevant section of the $date string.
+		$month 	= substr($_POST["date"], 3,2);
+		$year	= substr($_POST["date"], 6);
+
+		if (!preg_match($datePattern, $_POST["date"]) || 
+			!checkdate($month, $day, $year)){	// Check that the date provided is real.
+			echo "<p>Date is invalid or in an incorrect format. Must be DD/MM/YYYY</p>";
 			return false;
 		}
 
@@ -133,7 +141,10 @@
 		    while($row = $resultSet->fetch_assoc()) {
 		    	$statusCode    = $row['statusCode'];
 		    	$status        = $row['status'];
+		    	
 		    	$date          = $row['statusDate'];
+		    	$date  		   = date('F d, Y', strtotime($date));
+
 		    	$share         = $row['share'];
 		    	$allowLike     = $row['allowLike'];
 		    	$allowComment  = $row['allowLike'];
