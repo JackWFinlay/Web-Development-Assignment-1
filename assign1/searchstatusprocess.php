@@ -19,43 +19,46 @@
 		<div class="container">
 			<h1>Status Posting System</h1>
 			<div>
-			<?php
-				require 'helperfunctions.php';
-				require 'constants.php';
-				run();
+				<?php
 
-				function run(){
-					$servername = SERVER;
-					$username 	= USERNAME;
-					$password 	= PASSWORD;
-					$dbname		= DBNAME;
+					require 'constants.php';
+					require 'helperfunctions.php';
+					
+					run();
 
-					if (empty($_GET['searchString'])) {
-						echo "<p>Search string is empty. Please enter a value.";
-						return;
+					function run(){
+
+						$servername = SERVER;
+						$username 	= USERNAME;
+						$password 	= PASSWORD;
+						$dbname		= DBNAME;
+
+						if (empty($_GET['searchString'])) {
+							echo "<p>Search string is empty. Please enter a value.</p>";
+							return;
+						}
+
+						$connection = new mysqli($servername, $username, $password, $dbname); // Create new DB connection.
+
+						if ($connection->connect_error) {
+						    echo "<p>Unable to connect to database: " . $connection->connect_error . "</p>";
+						    return;
+						} 
+
+						if (!checkTableExists($connection)) {
+							echo "<p>Unable to create or find database table, please try again.</p>";
+							return;
+						}
+
+						if (!getSearchResults($connection)){
+							echo "<p>Unable to find status, please try again or use another serach phrase.</p>";
+						}
+
+						$connection->close();
+						
 					}
 
-					$connection = new mysqli($servername, $username, $password); // Create new DB connection.
-
-					if ($connection->connect_error) {
-					    echo "<p>Unable to connect to database: " . $connection->connect_error . "</p>";
-					    return;
-					} 
-
-					$connection->select_db($dbname);
-
-					if (!checkTableExists($connection)) {
-						echo "<p>Unable to create or find database table, please try again.</p>";
-						return;
-					}
-
-					if (!getSearchResults($connection)){
-						echo "<p>Unable to find status, please try again or use another serach phrase.</p>";
-					}
-
-					$connection->close();
-				}
-			?>
+				?>
 			</div>
 			<br/>
 			<a href="searchstatusform.php">Search for another status</a>

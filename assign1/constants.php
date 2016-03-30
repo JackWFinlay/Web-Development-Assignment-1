@@ -1,7 +1,8 @@
 <?php
 
-define("SERVER", "localhost");
-define("USERNAME", "root");
+define("SERVER", "cmslamp14.aut.ac.nz");
+define("USERNAME", "fhp0351");
 define("PASSWORD", "");
-define("DBNAME", "fhp0351_Ass1_DB");
+define("DBNAME", "fhp0351");
+
 ?>

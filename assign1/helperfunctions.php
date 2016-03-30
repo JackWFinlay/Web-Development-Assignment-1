@@ -1,8 +1,8 @@
 <?php
 	//returns whether the table exists, creates it if it doesn't.
 	function checkTableExists($connection) {
-		$sqlCommand = "SHOW TABLES LIKE 'status'";
-		$createTableSQL = "CREATE TABLE IF NOT EXISTS fhp0351.status (
+
+		$createTableSQL = "CREATE TABLE IF NOT EXISTS status (
 							statusCode VARCHAR(5) NOT NULL PRIMARY KEY,
 							status VARCHAR(1024) NOT NULL,
 							statusDate DATE NOT NULL,
@@ -14,18 +14,16 @@
 
 		if ($connection->query($createTableSQL) === true) {
 			// Table created
-			
     		return true;
 		} else {
-	    	return false;
-	    	echo "table not created";
+	    	return false;   	
 		}
 
-		
 	}
 
 	// Inserts the passed in details to the DB.
 	function insertStatus($connection){
+
 		$statusCode     = $_POST["statusCode"]; 
 		$status         = $_POST["status"];
 		
@@ -47,17 +45,17 @@
 							'{$allowShare}'
 							)";
 
-
 		if ($connection->query($insertStatusSQL) === true) {
-		    	return true;
-			} else {
-		    	return false;
+	    	return true;
+		} else {
+	    	return false;
+		}
 
-			}
 	}
 
 	// Checks if status code is unique.
 	function isStatusCodeUnique($connection) {
+
 		$statusCode = $_POST["statusCode"];
 		$sqlCommand = "SELECT COUNT(*) AS total FROM status WHERE statusCode LIKE '{$statusCode}'";
 
@@ -68,10 +66,12 @@
 		} else {
 		    return true;
 		}
+
 	}
 
 	// Checks that data passed from form is valid.
 	function isDataValid() {
+
 		// Regular Expressions
 		$statusCodePattern = '/^S\d{4}$/';
 		$statusPattern     = '/^[a-zA-Z0-9\s!,\?\.]*$/';
@@ -113,9 +113,11 @@
 		}
 
 		return true;
+
 	}
 
 	function getSearchResults($connection){
+
 		$searchString = $_GET['searchString'];
 
 		$sqlCommand = "SELECT * FROM status WHERE status LIKE '%{$searchString}%'";
@@ -123,7 +125,9 @@
 		$resultSet = $connection->query($sqlCommand);
 
 		if ($resultSet->num_rows > 0) {
+
 		    while($row = $resultSet->fetch_assoc()) {
+
 		    	$statusCode    = $row['statusCode'];
 		    	$status        = $row['status'];
 		    	
@@ -160,6 +164,7 @@
 		} else {
 		    return false;
 		}
+		
 	}
 
 
