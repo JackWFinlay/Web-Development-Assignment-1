@@ -22,13 +22,15 @@
 			<h1>Status Posting System</h1>
 			<?php
 				require 'helperfunctions.php';
+				require 'constants.php';
 				run(); //Declared and run as function so that return can be called, halting processing of PHP, but allowing parsing of HTML to continue.
 
 				function run(){
-					$servername = "localhost";
-					$username 	= "root";
-					$password 	= "";
-					$dbname		= "fhp0351_Ass1_DB";
+					
+					$servername = SERVER;
+					$username 	= USERNAME;
+					$password 	= PASSWORD;
+					$dbname		= DBNAME;
 
 					if (!isDataValid()){
 						return;
@@ -40,11 +42,6 @@
 					    echo "<p>Unable to connect to database: " . $connection->connect_error . "</p>";
 					    return;
 					} 
-
-					if (!checkDBExists($connection)) {
-						echo "<p>Unable to find or create database, please try again: " . $connection->error . "</p>";
-						return;
-					}
 
 					$connection->select_db($dbname);
 

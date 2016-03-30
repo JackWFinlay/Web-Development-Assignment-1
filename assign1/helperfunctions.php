@@ -1,19 +1,8 @@
 <?php
-	// Checks if DB exists, creates DB if it doesn't.
-	function checkDBExists($connection){
-		$sqlCommand = "CREATE DATABASE IF NOT EXISTS fhp0351_Ass1_DB;";
-
-		if ($connection->query($sqlCommand) === true) {
-		    return true;
-		} else {
-		    return false;
-		}
-	}
-
 	//returns whether the table exists, creates it if it doesn't.
 	function checkTableExists($connection) {
 		$sqlCommand = "SHOW TABLES LIKE 'status'";
-		$createTableSQL = "CREATE TABLE status (
+		$createTableSQL = "CREATE TABLE IF NOT EXISTS fhp0351.status (
 							statusCode VARCHAR(5) NOT NULL PRIMARY KEY,
 							status VARCHAR(1024) NOT NULL,
 							statusDate DATE NOT NULL,
@@ -23,20 +12,16 @@
 							allowShare BOOLEAN
 						)";
 
-		$results = $connection->query($sqlCommand);
-		if (($results->num_rows) > 0){
-			// Table exists
-			return true;
+		if ($connection->query($createTableSQL) === true) {
+			// Table created
+			
+    		return true;
 		} else {
-
-			if ($connection->query($createTableSQL) === true) {
-				// Table created
-	    		return true;
-			} else {
-		    	return false;
-			}
-
+	    	return false;
+	    	echo "table not created";
 		}
+
+		
 	}
 
 	// Inserts the passed in details to the DB.

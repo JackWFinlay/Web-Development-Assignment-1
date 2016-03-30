@@ -21,13 +21,14 @@
 			<div>
 			<?php
 				require 'helperfunctions.php';
+				require 'constants.php';
 				run();
 
 				function run(){
-					$servername = "localhost";
-					$username 	= "root";
-					$password 	= "";
-					$dbname		= "fhp0351_Ass1_DB";
+					$servername = SERVER;
+					$username 	= USERNAME;
+					$password 	= PASSWORD;
+					$dbname		= DBNAME;
 
 					if (empty($_GET['searchString'])) {
 						echo "<p>Search string is empty. Please enter a value.";
@@ -40,11 +41,6 @@
 					    echo "<p>Unable to connect to database: " . $connection->connect_error . "</p>";
 					    return;
 					} 
-
-					if (!checkDBExists($connection)) {
-						echo "<p>Unable to find or create database, please try again.</p>";
-						return;
-					}
 
 					$connection->select_db($dbname);
 
