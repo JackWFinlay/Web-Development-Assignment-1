@@ -33,20 +33,20 @@
 					$username 	= USERNAME;
 					$password 	= PASSWORD;
 					$dbname		= DBNAME;
-
-					if (!isDataValid()){
-						return;
-					}
 					
-					$connection = new mysqli($servername, $username, $password, $dbname); // Create new DB connection.
-
-					if ($connection->connect_error) {
-					    echo "<p>Unable to connect to database: " . $connection->connect_error . "</p>";
+					$connection = mysqli_connect($servername, $username, $password, $dbname); // Create new DB connection.
+					
+					if (!$connection) {
+					    echo "<p>Unable to connect to database: " . mysqli_connect_error() . "</p>";
 					    return;
 					}
 
+					if (!isDataValid($connection)){
+						return;
+					}
+
 					if (!checkTableExists($connection)) {
-						echo "<p>Unable to create or find database table, please try again:" . $connection->error . "</p>";
+						echo "<p>Unable to create or find database table, please try again:" . mysqli_error($connection) . "</p>";
 						return;
 					}
 					
@@ -57,11 +57,11 @@
 					}
 					
 					if (!insertStatus($connection)) {
-						echo "<p>Unable to post status try again: " . $connection->error . "</p>";
+						echo "<p>Unable to post status try again: " . mysqli_error($connection) . "</p>";
 						return;
 					}
 
-					$connection->close();
+					mysqli_close($connection);
 
 					echo "<p>Status was successfully posted!</p>";
 

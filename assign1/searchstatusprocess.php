@@ -24,7 +24,7 @@
 					require 'constants.php';
 					require 'helperfunctions.php';
 					
-					run();
+					run(); //Declared and run as function so that return can be called, halting processing of PHP, but allowing parsing of HTML to continue.
 
 					function run(){
 
@@ -33,15 +33,15 @@
 						$password 	= PASSWORD;
 						$dbname		= DBNAME;
 
-						if (empty($_GET['searchString'])) {
+						$connection =  mysqli_connect($servername, $username, $password, $dbname); // Create new DB connection.
+
+						if (empty(mysqli_escape_string($connection, $_GET['searchString']))) {
 							echo "<p>Search string is empty. Please enter a value.</p>";
 							return;
 						}
 
-						$connection = new mysqli($servername, $username, $password, $dbname); // Create new DB connection.
-
-						if ($connection->connect_error) {
-						    echo "<p>Unable to connect to database: " . $connection->connect_error . "</p>";
+						if (!$connection) {
+						    echo "<p>Unable to connect to database: " . mysqli_connect_error() . "</p>";
 						    return;
 						} 
 
@@ -51,10 +51,10 @@
 						}
 
 						if (!getSearchResults($connection)){
-							echo "<p>Unable to find status, please try again or use another serach phrase.</p>";
+							echo "<p>Unable to find status, please try again or use another search phrase.</p>";
 						}
 
-						$connection->close();
+						mysqli_close($connection);
 						
 					}
 

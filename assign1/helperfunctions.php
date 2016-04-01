@@ -1,18 +1,23 @@
 <?php
+
 	//returns whether the table exists, creates it if it doesn't.
 	function checkTableExists($connection) {
 
-		$createTableSQL = "CREATE TABLE IF NOT EXISTS status (
-							statusCode VARCHAR(5) NOT NULL PRIMARY KEY,
-							status VARCHAR(1024) NOT NULL,
-							statusDate DATE NOT NULL,
-							share VARCHAR(7),
-							allowLike BOOLEAN,
-							allowComment BOOLEAN,
-							allowShare BOOLEAN
-						)";
+		if (!mysqli_select_db($connection, DBNAME)) {
+			return false;
+		}
 
-		if ($connection->query($createTableSQL) === true) {
+		$createTableSQL = "CREATE TABLE IF NOT EXISTS status (" .
+							"statusCode VARCHAR(5) NOT NULL PRIMARY KEY," .
+							"status VARCHAR(1024) NOT NULL," .
+							"statusDate DATE NOT NULL," .
+							"share VARCHAR(7)," .
+							"allowLike BOOLEAN," .
+							"allowComment BOOLEAN," .
+							"allowShare BOOLEAN" .
+						")";
+
+		if (mysqli_query($connection, $createTableSQL) === true) {
 			// Table created
     		return true;
 		} else {
@@ -24,10 +29,14 @@
 	// Inserts the passed in details to the DB.
 	function insertStatus($connection){
 
-		$statusCode     = $_POST["statusCode"]; 
-		$status         = $_POST["status"];
+		if (!mysqli_select_db($connection, DBNAME)) {
+			return false;
+		}
+
+		$statusCode     =  mysqli_escape_string($connection, $_POST["statusCode"]); 
+		$status         =  mysqli_escape_string($connection, $_POST["status"]);
 		
-		$date = str_replace('/', '-', $_POST["date"]); // PHP needs date with hyphens for dd/mm/yyyy formats.
+		$date = str_replace('/', '-',  mysqli_escape_string($connection, $_POST["date"])); // PHP needs date with hyphens for dd/mm/yyyy formats.
 		$date = date('Y-m-d', strtotime($date)); // yyyy-mm-dd required for MySql Databases.
 
 		$share          = isset($_POST["share"]) ? $_POST["share"] : "Public"; //Default to public if not set.
@@ -45,7 +54,7 @@
 							'{$allowShare}'
 							)";
 
-		if ($connection->query($insertStatusSQL) === true) {
+		if (mysqli_query($connection, $insertStatusSQL) === true) {
 	    	return true;
 		} else {
 	    	return false;
@@ -56,57 +65,68 @@
 	// Checks if status code is unique.
 	function isStatusCodeUnique($connection) {
 
-		$statusCode = $_POST["statusCode"];
+		if (!mysqli_select_db($connection, DBNAME)) {
+			return false;
+		}
+
+		$statusCode = mysqli_escape_string($connection, $_POST["statusCode"]);
 		$sqlCommand = "SELECT COUNT(*) AS total FROM status WHERE statusCode LIKE '{$statusCode}'";
 
-		$result = $connection->query($sqlCommand);
-		$data = $result->fetch_assoc();
+		$result = mysqli_query($connection, $sqlCommand);
+		$data = mysqli_fetch_assoc($result);
 		if ( $data['total'] > 0 ) {
+			mysqli_free_result($result);
 		    return false;
 		} else {
+			mysqli_free_result($result);
 		    return true;
 		}
 
 	}
 
 	// Checks that data passed from form is valid.
-	function isDataValid() {
+	function isDataValid($connection) {
 
 		// Regular Expressions
 		$statusCodePattern = '/^S\d{4}$/';
 		$statusPattern     = '/^[a-zA-Z0-9\s!,\?\.]*$/';
 		$datePattern       = '/^\d{1,2}\/\d{1,2}\/\d{4}$/';
 
-		if (empty($_POST["statusCode"])){ // Print message if statusCode is not specified.
+		$statusCode        = mysqli_escape_string($connection, $_POST["statusCode"]);
+		$status 		   = mysqli_escape_string($connection, $_POST["status"]);
+		$date 			   = mysqli_escape_string($connection, $_POST["date"]);
+
+
+		if (empty($statusCode)){ // Print message if statusCode is not specified.
 			echo "<p>Status Code not specified</p>";
 			return false;
 		}
 
-		if (!preg_match($statusCodePattern, $_POST["statusCode"])){
+		if (!preg_match($statusCodePattern, $statusCode)){
 			echo "<p>Status code is in incorrect format. Must be capital 'S' followed by four digits.</p>";
 			return false;
 		}
 
-		if (empty($_POST["status"])){
+		if (empty($status)){
 			echo "<p>Status not specified</p>";
 			return false;
 		}
 
-		if (!preg_match($statusPattern, $_POST["status"])){
+		if (!preg_match($statusPattern, $status)){
 			echo "<p>Status contains illegal characters. Can only contain alphanumeric and !.,? characters.</p>";
 			return false;
 		}
 
-		if (empty($_POST["date"])){
+		if (empty($date)){
 			echo "<p>Date not specified</p>";
 			return false;
 		} 
 
-		$day 	= substr($_POST["date"], 0,2); //Grab the relevant section of the $date string.
-		$month 	= substr($_POST["date"], 3,2);
-		$year	= substr($_POST["date"], 6);
+		$day 	= substr($date, 0,2); //Grab the relevant section of the $date string.
+		$month 	= substr($date, 3,2);
+		$year	= substr($date, 6);
 
-		if (!preg_match($datePattern, $_POST["date"]) || 
+		if (!preg_match($datePattern, $date) || 
 			!checkdate($month, $day, $year)){	// Check that the date provided is real.
 			echo "<p>Date is invalid or in an incorrect format. Must be DD/MM/YYYY</p>";
 			return false;
@@ -118,15 +138,19 @@
 
 	function getSearchResults($connection){
 
-		$searchString = $_GET['searchString'];
+		if (!mysqli_select_db($connection, DBNAME)) {
+			return false;
+		}
+
+		$searchString = mysqli_escape_string($connection, $_GET['searchString']);
 
 		$sqlCommand = "SELECT * FROM status WHERE status LIKE '%{$searchString}%'";
 
-		$resultSet = $connection->query($sqlCommand);
+		$resultSet = mysqli_query($connection, $sqlCommand);
 
-		if ($resultSet->num_rows > 0) {
+		if (mysqli_num_rows($resultSet) > 0) {
 
-		    while($row = $resultSet->fetch_assoc()) {
+		    while($row = mysqli_fetch_assoc($resultSet)) {
 
 		    	$statusCode    = $row['statusCode'];
 		    	$status        = $row['status'];
@@ -160,8 +184,10 @@
 		        	 </div>";
 		    }
 
+		    mysqli_free_result($resultSet);
 		    return true;
 		} else {
+			mysqli_free_result($resultSet);
 		    return false;
 		}
 		
