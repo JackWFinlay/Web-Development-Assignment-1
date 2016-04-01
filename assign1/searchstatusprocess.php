@@ -33,12 +33,12 @@
 						$password 	= PASSWORD;
 						$dbname		= DBNAME;
 
-						$connection =  mysqli_connect($servername, $username, $password, $dbname); // Create new DB connection.
-
-						if (empty(mysqli_escape_string($connection, $_GET['searchString']))) {
+						if (empty($_GET['searchString'])) {
 							echo "<p>Search string is empty. Please enter a value.</p>";
 							return;
 						}
+
+						$connection =  mysqli_connect($servername, $username, $password, $dbname); // Create new DB connection.
 
 						if (!$connection) {
 						    echo "<p>Unable to connect to database: " . mysqli_connect_error() . "</p>";

@@ -40,9 +40,10 @@
 		$date = date('Y-m-d', strtotime($date)); // yyyy-mm-dd required for MySql Databases.
 
 		$share          = isset($_POST["share"]) ? $_POST["share"] : "Public"; //Default to public if not set.
-		$allowLike	    = isset($_POST["allowLike"]) ? $_POST["allowLike"] : false; //false if not set.
-		$allowComment   = isset($_POST["allowComment"]) ? $_POST["allowComment"] : false;
-		$allowShare     = isset($_POST["allowShare"]) ? $_POST["allowShare"] : false;
+
+		$allowLike	    = isset($_POST["allowLike"]) ? true : false; //false if not set.
+		$allowComment   = isset($_POST["allowComment"]) ? true : false;
+		$allowShare     = isset($_POST["allowShare"]) ? true : false;
 
 		$insertStatusSQL = "INSERT INTO status VALUES (
 							'{$statusCode}',
