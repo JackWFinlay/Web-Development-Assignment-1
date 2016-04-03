@@ -21,24 +21,20 @@
 			<div>
 				<?php
 
-					require 'constants.php';
-					require 'helperfunctions.php';
+					require_once 'settings.php';
+					require_once 'helperfunctions.php';
 					
 					run(); //Declared and run as function so that return can be called, halting processing of PHP, but allowing parsing of HTML to continue.
 
 					function run(){
-
-						$servername = SERVER;
-						$username 	= USERNAME;
-						$password 	= PASSWORD;
-						$dbname		= DBNAME;
+						global $host, $user, $password, $dbname;
 
 						if (empty($_GET['searchString'])) {
 							echo "<p>Search string is empty. Please enter a value.</p>";
 							return;
 						}
 
-						$connection =  mysqli_connect($servername, $username, $password, $dbname); // Create new DB connection.
+						$connection =  mysqli_connect($host, $user, $password, $dbname); // Create new DB connection.
 
 						if (!$connection) {
 						    echo "<p>Unable to connect to database: " . mysqli_connect_error() . "</p>";

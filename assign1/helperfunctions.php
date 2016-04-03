@@ -2,8 +2,10 @@
 
 	//returns whether the table exists, creates it if it doesn't.
 	function checkTableExists($connection) {
+		
+		global $dbname;
 
-		if (!mysqli_select_db($connection, DBNAME)) {
+		if (!mysqli_select_db($connection, $dbname)) {
 			return false;
 		}
 
@@ -29,7 +31,9 @@
 	// Inserts the passed in details to the DB.
 	function insertStatus($connection){
 
-		if (!mysqli_select_db($connection, DBNAME)) {
+		global $dbname;
+
+		if (!mysqli_select_db($connection, $dbname)) {
 			return false;
 		}
 
@@ -66,7 +70,9 @@
 	// Checks if status code is unique.
 	function isStatusCodeUnique($connection) {
 
-		if (!mysqli_select_db($connection, DBNAME)) {
+		global $dbname;
+
+		if (!mysqli_select_db($connection, $dbname)) {
 			return false;
 		}
 
@@ -139,7 +145,9 @@
 
 	function getSearchResults($connection){
 
-		if (!mysqli_select_db($connection, DBNAME)) {
+		global $dbname;
+
+		if (!mysqli_select_db($connection, $dbname)) {
 			return false;
 		}
 
