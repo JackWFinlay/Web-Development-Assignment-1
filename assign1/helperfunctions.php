@@ -9,7 +9,9 @@
 			return false;
 		}
 
-		$createTableSQL = "CREATE TABLE IF NOT EXISTS status (" .
+		$sqlCommand = "SHOW TABLES LIKE 'status'";
+
+		$createTableSQL = "CREATE TABLE status (" .
 							"statusCode VARCHAR(5) NOT NULL PRIMARY KEY," .
 							"status VARCHAR(1024) NOT NULL," .
 							"statusDate DATE NOT NULL," .
@@ -19,11 +21,17 @@
 							"allowShare BOOLEAN" .
 						")";
 
-		if (mysqli_query($connection, $createTableSQL) === true) {
-			// Table created
-    		return true;
+		$results = mysqli_query($connection, $sqlCommand);
+		if ((mysqli_num_rows($results)) > 0){
+			// Table exists
+			return true;
 		} else {
-	    	return false;   	
+			if (mysqli_query($connection, $createTableSQL) == true) {
+			// Table created
+	    		return true;
+			} else {
+		    	return false;   	
+			}
 		}
 
 	}
