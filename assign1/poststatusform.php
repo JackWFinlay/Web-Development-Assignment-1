@@ -22,12 +22,12 @@
 
 				<div class="form-group">
 					<label class="form-label">Status Code (required):</label>
-					<input type="text" name="statusCode" required><br/>
+					<input type="text" name="statusCode" class="form-input" required><br/>
 				</div>
 
 				<div class="form-group">
 					<label class="form-label">Status (required):</label> 
-					<input type="text" name="status" class="input-wide" required><br/>
+					<input type="text" name="status" class="input-wide form-input" required><br/>
 				</div>
 
 				<?php
@@ -35,7 +35,7 @@
 				$date = date('d/m/Y');
 
 				echo "<label class='form-label'>Date: </label>
-					  <input type='text' name='date' class='share' value='$date'><br/>"
+					  <input type='text' name='date' class='share form-input' value='$date'><br/>"
 				?>
 				
 				<!-- Share -->

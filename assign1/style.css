@@ -33,6 +33,10 @@
 	margin-bottom: 5px;
 }
 
+.form-input:hover {
+	border-color: rgb(0, 100, 255);
+}
+
 .form-label {
 	display: inline-block;
 	width: 135px;
