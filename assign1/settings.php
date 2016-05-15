@@ -1,8 +1,8 @@
 <?php
 
-	$host = "cmslamp14.aut.ac.nz";
-	$user = "fhp0351"; 
+	$host = "";
+	$user = ""; 
 	$password = "";
-	$dbname = "fhp0351"; 
+	$dbname = ""; 
 
 ?>

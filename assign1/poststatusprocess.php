@@ -18,6 +18,14 @@
 		<title>Post Status Process</title>
 	</head>
 	<body>
+		<nav>
+			<ul>
+				<li><a href="index.php">Home</a></li>
+				<li><a href="poststatusform.php">Post</a></li>
+				<li><a href="searchstatusform.php">Search</a></li>
+				<li><a href="about.php">About</a></li>
+			</ul>
+		</nav>
 		<div class="container">
 			<h1>Status Posting System</h1>
 			<?php
